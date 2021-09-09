@@ -37,8 +37,14 @@ const main = async () => {
     console.log("Logged in")
 };
 
+const vectorAddition = (psd) => {
+    nextSum = psd[0].map((v, i) => v+psd[1][i]);
+}
+
 main();
 
-notion.brainwaves("psd").subscribe(psd => {
-    console.log(psd)
+notion.brainwaves("psd").subscribe(brainwaves => {
+    str = JSON.stringify(brainwaves.psd, null, 4); // (Optional) beautiful indented output.
+    console.log(brainwaves.psd.length);
+    // console.log(psd);
 })
