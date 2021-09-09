@@ -37,14 +37,38 @@ const main = async () => {
     console.log("Logged in")
 };
 
-const vectorAddition = (psd) => {
-    nextSum = psd[0].map((v, i) => v+psd[1][i]);
+function vectorAddition (first, last) { return last.map((v, i) => v+first[i]) }
+
+function vectorAverage (psd, elec=1) {
+
+    let lastVector = psd[psd.length-1]
+    let firstVector = psd[0]
+
+    // console.log(psd.length)
+  
+    let nextSum = vectorAddition(firstVector, lastVector)
+
+    // console.log(nextSum.length)
+    
+    // console.log(nextSum)
+    if (psd.length-1 > 0) {
+        let newPsd = psd.slice(1, psd.length-1).concat([nextSum])
+        // console.log(newPsd.length)
+        return vectorAverage(newPsd, elec+1)
+    } else {
+        // console.log(psd)
+        return psd[0].map(v => v/elec+1)
+
+    }
+
+
 }
 
 main();
 
 notion.brainwaves("psd").subscribe(brainwaves => {
-    str = JSON.stringify(brainwaves.psd, null, 4); // (Optional) beautiful indented output.
-    console.log(brainwaves.psd.length);
-    // console.log(psd);
+    // str = JSON.stringify(brainwaves.psd, null, 4); 
+    // console.log(brainwaves.psd.length);
+    let psd = brainwaves.psd
+    console.log(vectorAverage(psd));
 })
