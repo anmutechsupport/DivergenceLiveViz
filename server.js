@@ -4,6 +4,15 @@ const io = require('socket.io')(server, {
   transports: ['websocket', 'polling']
 });
 
+// const io = require("socket.io")(3000, {
+//     rejectUnauthorized: false,
+//     cors: {
+//       origin: "*",
+//       methods: ["GET", "POST"]
+//     },
+//     allowEIO3: true
+//   });
+
 const { Notion } = require("@neurosity/notion");
 require("dotenv").config();
 
@@ -21,10 +30,6 @@ const verifyEnvs = (email, password, deviceId) => {
         process.exit(0)
     }
 };
-
-verifyEnvs(email, password, deviceId)
-
-console.log(`${email} attempting to authenticate to ${deviceId}`);
 
 const notion = new Notion({
     deviceId
@@ -70,10 +75,12 @@ function vectorAverage (psd, elec=1) {
 
 }
 
-let tick = 0;
 // 1. listen for socket connections
 io.on('connection', client => {
-    
+
+    console.log("connected")
+    verifyEnvs(email, password, deviceId)
+    console.log(`${email} attempting to authenticate to ${deviceId}`);
     main();
 
     setInterval(() => {

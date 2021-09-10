@@ -1,6 +1,8 @@
-import io from 'socket.io-client';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { io }  from 'socket.io-client';
+import { React } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import './style.css';
+import { ReactDOM } from 'react-dom';
 import { useEffect, useState } from 'react';
 import {
   BarChart,
