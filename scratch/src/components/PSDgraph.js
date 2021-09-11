@@ -21,8 +21,13 @@ export function PSDgraph() {
     });
 
     socket.on('psd', psd => {
-      console.log(psd)
-      setData(psd);
+      // console.log(psd)
+      const data = []
+      for (let i = 0; i < psd.value.length; i++) {
+        data.push({freqs: psd.freqs[i], value: psd.value[i]})
+      }
+
+      setData(data);
     });
   
   }
