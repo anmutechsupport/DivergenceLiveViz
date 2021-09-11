@@ -87,21 +87,18 @@ login();
 // 1. listen for socket connections
 io.on('connection', client => {
 
-    setInterval(() => {
-        // 2. every second, emit a 'cpu' event to user
-        notion.brainwaves("psd").subscribe(brainwaves => {
-            // str = JSON.stringify(brainwaves.psd, null, 4); 
-            // console.log(brainwaves.psd.length);
-            let psd = brainwaves.psd
-            let averagedPsd = vectorAverage(psd)
+    notion.brainwaves("psd").subscribe(brainwaves => {
+        // str = JSON.stringify(brainwaves.psd, null, 4); 
+        // console.log(brainwaves.psd.length);
+        let psd = brainwaves.psd
+        let averagedPsd = vectorAverage(psd)
 
-            client.emit('psd', {
-                freqs: brainwaves.freqs,
-                value: averagedPsd
-            });
-        })
-
-    }, 1000);
+        client.emit('psd', {
+            freqs: brainwaves.freqs,
+            value: averagedPsd
+        });
+    })
+    
 });
 
 server.listen(4000);
