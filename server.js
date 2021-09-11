@@ -35,16 +35,19 @@ const notion = new Notion({
     deviceId
 });
 
-const main = async () => {
-    await notion
-    .login({
-        email,
-        password
-    })
-    .catch((error) => {
+const login = async () => {
+
+    try { 
+        await notion
+        .login({
+            email,
+            password
+        })
+    } catch(error) {
         console.log(error)
         throw new Error(error);
-    });
+    }
+
     console.log("Logged in")
 };
 
@@ -75,13 +78,14 @@ function vectorAverage (psd, elec=1) {
 
 }
 
+console.log("connected")
+verifyEnvs(email, password, deviceId)
+
+console.log(`${email} attempting to authenticate to ${deviceId}`);
+login();
+
 // 1. listen for socket connections
 io.on('connection', client => {
-
-    console.log("connected")
-    verifyEnvs(email, password, deviceId)
-    console.log(`${email} attempting to authenticate to ${deviceId}`);
-    main();
 
     setInterval(() => {
         // 2. every second, emit a 'cpu' event to user
@@ -100,4 +104,4 @@ io.on('connection', client => {
     }, 1000);
 });
 
-server.listen(3000);
+server.listen(4000);

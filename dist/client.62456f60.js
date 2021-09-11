@@ -96286,6 +96286,10 @@ var _reactDom = require("react-dom");
 
 var _recharts = require("recharts");
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -96300,20 +96304,46 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
-var socket = (0, _socket.io)('http://localhost:3000', {
-  transports: ['websocket', 'polling']
-});
-
 var App = function App(_ref) {
   _objectDestructuringEmpty(_ref);
 
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       data = _useState2[0],
-      setData = _useState2[1]; // 1. listen for a cpu event and update the state
+      setData = _useState2[1];
+
+  var getData = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var socket;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return (0, _socket.io)('http://localhost:3000', {
+                transports: ['websocket', 'polling']
+              });
+
+            case 2:
+              socket = _context.sent;
+              return _context.abrupt("return", socket);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function getData() {
+      return _ref2.apply(this, arguments);
+    };
+  }(); // 1. listen for a cpu event and update the state
 
 
   (0, _react.useEffect)(function () {
+    var socket = getData();
     socket.on('psd', function (psd) {
       setData(psd);
     });
@@ -96359,7 +96389,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49672" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60515" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

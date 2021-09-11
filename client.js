@@ -14,15 +14,21 @@ import {
   Tooltip
 } from 'recharts';
 
-const socket = io('http://localhost:3000', {
-  transports: ['websocket', 'polling']
-});
-
 const App = ({}) => {
   const [data, setData] = useState([]);
 
+  const getData = async () => {
+    const socket = await io('http://localhost:4000', {
+      transports: ['websocket', 'polling']
+    });
+
+    return socket    
+  }
+
   // 1. listen for a cpu event and update the state
   useEffect(() => {
+    const socket = getData();
+
     socket.on('psd', psd => {
       setData(psd);
     });
