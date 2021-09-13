@@ -12,3 +12,11 @@
   #submit {
     width: 100%;
   }
+
+.toggle-list {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 30px;
+
+}

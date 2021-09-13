@@ -91,12 +91,17 @@ io.on('connection', client => {
         // str = JSON.stringify(brainwaves.psd, null, 4); 
         // console.log(brainwaves.psd.length);
         let psd = brainwaves.psd
-        let averagedPsd = vectorAverage(psd)
-
-        client.emit('psd', {
+        let meanPsd = vectorAverage(psd)
+        let emitObj = {
             freqs: brainwaves.freqs,
-            value: averagedPsd
-        });
+            meanPsd: meanPsd,
+        }
+
+        for (i=0; i<psd.length; i++) {
+            emitObj[`e${i+1}`] = psd[i]
+        }
+
+        client.emit('psd', emitObj);
     })
     
 });
