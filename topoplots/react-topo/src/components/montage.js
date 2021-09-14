@@ -1,31 +1,63 @@
 import { Electrode } from './electrode';
 import { InterpolatedPoint } from './interpolatedPoint';
 import './style.css';
+import { io }  from 'socket.io-client';
 
 import React, { useEffect, useState } from 'react';
 
 export function Montage({gridSize}) {
-    const electrodes = []
-    const electrodeProps = [[1, "top", "left"], [2, "top", "right"], [3, "middle", "left"], [4, "middle", "right"], [5, "third", "left"], [6, "third", "right"], [7, "bottom", "left"], [8, "bottom", "right"]]
+    const [rgbVal, setRgb] = useState();
+    const [electrodeList, setElectrodeList] = useState([]);
+    const [interPlist, setInterpoints] = useState([]);
+
+    const getRGB = () => {
+        const socket = io('http://localhost:4000', {
+        transports: ['websocket', 'polling']
+        });
+
+        socket.on('rgb', rgb => {
+
+            setRgb(rgb)
+
+        });
     
-    let i = 0;
-    for (const prop of electrodeProps) {
-        electrodes.push( <Electrode number={prop[0]} vertical={prop[1]} horizontal={prop[2]} key={i} /> )
-        i++;
     }
 
+    useEffect(() => {
+        getRGB();
+    
+    }, []);
 
-    const interpoints = []
-    for (let i=0; i<gridSize; i++) {
-        interpoints.push( <InterpolatedPoint number={i} color={"gray"} key={i} /> )
-    }
+    useEffect(() => {
+
+        // console.log(rgbVal)
+        const electrodes = []
+        const electrodeProps = [[1, "top", "left"], [2, "top", "right"], [3, "middle", "left"], [4, "middle", "right"], [5, "third", "left"], [6, "third", "right"], [7, "bottom", "left"], [8, "bottom", "right"]]
+        
+        let i = 0;
+        for (const prop of electrodeProps) {
+            electrodes.push( <Electrode number={prop[0]} vertical={prop[1]} horizontal={prop[2]} key={i} /> )
+            i++;
+        }
+    
+        const interpoints = []
+        for (let i=0; i<gridSize; i++) {
+            if (rgbVal) {
+                interpoints.push( <InterpolatedPoint number={i} color={rgbVal[i]} key={i} /> )
+            }
+        }
+
+        setElectrodeList(electrodes);
+        setInterpoints(interpoints);
+
+    }, [rgbVal])
 
     return (
         <section className="topoplot-wrapper">
-            {electrodes}
+            {electrodeList}
 
             <aside className="topoplot-grid">
-                {interpoints}
+                {interPlist}
             </aside>
 
         </section>

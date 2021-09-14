@@ -5,7 +5,7 @@ export function InterpolatedPoint({color, number}) {
     // const [color, setColor] = useState([]);
  
     return (
-        <div style={{background: color}} className={"topoplot-u"+number}></div>
+        <div style={{ background: `rgb(${color})` }} className={"topoplot-u"+number}></div>
     );
   };
   
