@@ -61,49 +61,11 @@ function App() {
         }
       }
     }
-  
-    // const filterLines = (lineList, toggleLines) => {
-    //   let newList = []
-    //   for (const [index, element] of toggleLines.entries()) {
-    //     if (element === true) {
-    //       // console.log(index)
-    //       // lineList.splice(index, 1) // lineList size changes, hence some element indexes are out of range
-    //       // console.log(lineList)
-    //       newList.push(lineList[index])
-    //     }
-    //   }
-    //   return newList
-    // }
-  
-    // const filteredLines = filterLines(lineList.slice(), toggleLines)
 
     setLineList(lineList);
     setLineKeys(lineKeys);
 
   }, [toggleLines, data])
-
-  // let lineList=[]
-  // let lineKeys = null
-  // const colors = ["red", "black", "green", "blue", "purple", "orange", "teal", "magenta", "gold"]
-  // if (data) {
-  //   lineKeys = Object.keys(data[0]).slice(1)
-  //   // console.log(lineKeys)
-  //   for (let i=0; i<colors.length; i++) {
-  //     lineList.push( <Line stroke={colors[i]} key={lineKeys[i]} dataKey={lineKeys[i]} /> )
-  //   }
-  // }
-
-  // const filterLines = (lineList, toggleLines) => {
-  //   for (const [index, element] of toggleLines.entries()) {
-  //     if (element === false) {
-  //       lineList.splice(index, 1)
-  //       console.log(lineList)
-  //     }
-  //   }
-  //   return lineList
-  // }
-
-  // const filteredLines = filterLines(lineList.slice(), toggleLines)
 
   const handleChange = (e, i) => {
     let newLines = toggleLines.slice()

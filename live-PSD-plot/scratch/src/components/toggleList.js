@@ -14,7 +14,7 @@ export function ToggleList({lineKeys, colors, toggleLines, handleChange}) {
     }
 
     return (
-        <div className="toggle-list">
+        <div style={{backgroundColor: "#ABBAEA"}}className="toggle-list">
             {checkBoxList}
         </div>
     )
