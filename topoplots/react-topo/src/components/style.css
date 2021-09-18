@@ -73,10 +73,10 @@
   
   [class*='topoplot-u'] {
     float: left;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     width: 9.09%;
     height: 9.09%;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.2s ease-out;
     background-color: lightgray;
   }
   

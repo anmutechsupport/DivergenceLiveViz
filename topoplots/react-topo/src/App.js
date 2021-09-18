@@ -5,7 +5,7 @@ import { Montage } from './components/montage';
 function App() {
   return (
     <div className="App">
-      <Montage gridSize={121}/>
+      <Montage gridSize={20}/>
     </div>
   );
 }

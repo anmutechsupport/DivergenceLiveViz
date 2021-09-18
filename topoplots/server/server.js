@@ -81,7 +81,7 @@ function vectorAverage (psd, elec=1) {
 
 }
 
-const calcInterp = (data) => {
+const calcInterp = (data, size) => {
     // x coordinates of the data
     const pos_x = [1,2,3,4,5,6,7,8];
 
@@ -92,7 +92,7 @@ const calcInterp = (data) => {
     // const data1 = [0.75, 0.2, 0.99, 0.1, 0.6, 0.8, 0.9, 0.8];
     // console.log(data)
 
-    const grid_params = [0,10,11];
+    const grid_params = [0,size-1,size];
 
     zi = topogrid.create(pos_x,pos_y,data,grid_params);
     // console.log(zi)
@@ -163,7 +163,7 @@ io.on('connection', client => {
         // str = JSON.stringify(brainwaves.psd, null, 4); 
         // console.log(brainwaves.psd.length);
         const alpha = brainwaves.data.alpha
-        const rgbVal = [].concat(...calcInterp(alpha));
+        const rgbVal = [].concat(...calcInterp(alpha, 20));
 
         client.emit('rgb', rgbVal)
     
