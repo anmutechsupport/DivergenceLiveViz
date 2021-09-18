@@ -125,15 +125,15 @@ const calcInterp = (data) => {
 }
 
 
-notion.brainwaves("psd").subscribe(brainwaves => {
-    // str = JSON.stringify(brainwaves.psd, null, 4); 
-    // console.log(brainwaves.psd.length);
-    const psd = brainwaves.psd
-    const elecMean = reductiveMean(psd)
-    // const rgbVal = calcInterp(elecMean)
-    const rgbVal = [].concat(...calcInterp(elecMean));
+// notion.brainwaves("psd").subscribe(brainwaves => {
+//     // str = JSON.stringify(brainwaves.psd, null, 4); 
+//     // console.log(brainwaves.psd.length);
+//     const psd = brainwaves.psd
+//     const elecMean = reductiveMean(psd)
+//     // const rgbVal = calcInterp(elecMean)
+//     const rgbVal = [].concat(...calcInterp(elecMean));
 
-})
+// })
 
 console.log("connected")
 verifyEnvs(email, password, deviceId)
@@ -141,15 +141,29 @@ verifyEnvs(email, password, deviceId)
 console.log(`${email} attempting to authenticate to ${deviceId}`);
 login();
 
+// io.on('connection', client => {
+
+//     notion.brainwaves("psd").subscribe(brainwaves => {
+//         // str = JSON.stringify(brainwaves.psd, null, 4); 
+//         // console.log(brainwaves.psd.length);
+//         const psd = brainwaves.psd
+//         const elecMean = reductiveMean(psd)
+//         // const rgbVal = calcInterp(elecMean)
+//         const rgbVal = [].concat(...calcInterp(elecMean));
+
+//         client.emit('rgb', rgbVal)
+    
+//     })
+    
+// });
+
 io.on('connection', client => {
 
-    notion.brainwaves("psd").subscribe(brainwaves => {
+    notion.brainwaves("powerByBand").subscribe(brainwaves => {
         // str = JSON.stringify(brainwaves.psd, null, 4); 
         // console.log(brainwaves.psd.length);
-        const psd = brainwaves.psd
-        const elecMean = reductiveMean(psd)
-        // const rgbVal = calcInterp(elecMean)
-        const rgbVal = [].concat(...calcInterp(elecMean));
+        const alpha = brainwaves.data.alpha
+        const rgbVal = [].concat(...calcInterp(alpha));
 
         client.emit('rgb', rgbVal)
     

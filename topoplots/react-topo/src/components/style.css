@@ -76,6 +76,7 @@
     border: 1px solid white;
     width: 9.09%;
     height: 9.09%;
-    background: lightgray;
+    transition: background-color 0.5s ease-out;
+    background-color: lightgray;
   }
   
