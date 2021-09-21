@@ -155,16 +155,19 @@ login();
     
 //     })
 
+let dim = 20;
+
 io.on('connection', socket => {
 
-    let dim = 20;
     socket.on('change-dim', value => {
         dim = value;
+        // console.log(dim)
       })
 
     notion.brainwaves("powerByBand").subscribe(brainwaves => {
         // str = JSON.stringify(brainwaves.psd, null, 4); 
         // console.log(brainwaves.psd.length);
+        // console.log(dim)
         const alpha = brainwaves.data.alpha
         const rgbVal = [].concat(...calcInterp(alpha, dim));
 

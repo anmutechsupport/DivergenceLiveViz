@@ -41,16 +41,21 @@ export function Montage({gridSize}) {
         }
     
         const interpoints = []
-        for (let i=0; i<gridSize*gridSize; i++) {
-            if (rgbVal) {
-                interpoints.push( <InterpolatedPoint gridSize={gridSize} number={i} color={rgbVal[i]} key={i} /> )
+        if (rgbVal) {
+            // console.log(rgbVal)
+            const rgb = rgbVal.slice()
+            if (gridSize*gridSize == rgb.length) {
+                for (let i=0; i<gridSize*gridSize; i++) {
+                    interpoints.push( <InterpolatedPoint gridSize={gridSize} number={i} color={rgb[i]} key={i} /> )
+                }
             }
+
+            setInterpoints(interpoints);
         }
 
         setElectrodeList(electrodes);
-        setInterpoints(interpoints);
 
-    }, [rgbVal])
+    }, [rgbVal, gridSize])
 
     return (
         <section className="topoplot-wrapper">
