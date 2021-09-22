@@ -24,7 +24,7 @@ export function PSDgraph({data, lineList}) {
               position="insideBottom" 
               />
         </XAxis>
-        <YAxis type="number" domain={[0, 10]}>
+        <YAxis type="number" domain={[0, 25]}>
           <Label
               value="Power/frequency (uV^20)"
               position="insideLeft"

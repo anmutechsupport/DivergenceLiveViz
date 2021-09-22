@@ -16,7 +16,7 @@ const io = require('socket.io')(server, {
 const { Notion } = require("@neurosity/notion");
 require("dotenv").config();
 
-const deviceId = process.env.DEVICE_ID || "";
+const deviceId = process.env.DEVICE_ID2 || "";
 const email = process.env.EMAIL || "";
 const password = process.env.PASSWORD || "";
 
@@ -78,6 +78,37 @@ function vectorAverage (psd, elec=1) {
 
 }
 
+const history = []
+
+const rollingMean = (emitObj) => {
+    // console.log(history)
+    history.push(emitObj)
+    const newEmit = {}
+    const keys = Object.keys(emitObj)
+    if (history.length > 3) {
+        history.shift();
+    }
+
+    newEmit[keys[0]] = emitObj[keys[0]]
+
+    if (history.length === 3){
+        // console.log(history)
+        for (const key of keys.slice(1)) {
+            const keyArr = []
+            for (const epoch of history) {
+                // console.log(epoch)
+                keyArr.push(epoch[key])
+            }
+            newEmit[key] = vectorAverage(keyArr)
+        }
+
+        return newEmit
+    } else {
+        return emitObj
+    }
+    
+}
+
 console.log("connected")
 verifyEnvs(email, password, deviceId)
 
@@ -86,6 +117,8 @@ login();
 
 // 1. listen for socket connections
 io.on('connection', client => {
+
+    console.log("socket connected")
 
     notion.brainwaves("psd").subscribe(brainwaves => {
         // str = JSON.stringify(brainwaves.psd, null, 4); 
@@ -101,7 +134,9 @@ io.on('connection', client => {
             emitObj[`e${i+1}`] = psd[i]
         }
 
-        client.emit('psd', emitObj);
+        let newEmitObj = rollingMean(emitObj)
+
+        client.emit('psd', newEmitObj);
     })
     
 });

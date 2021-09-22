@@ -25,11 +25,13 @@ function App() {
       let currData = []
 
       for (let i = 0; i < psd.freqs.length; i++) {
-        currData[i] = {}
-        for (const [key, value] of Object.entries(psd)) {
-          const point = currData [i] 
-          point[key] = value[i]
-          currData[i] = point
+        if (psd.freqs[i] < 60) { // filtering
+          currData[i] = {}
+          for (const [key, value] of Object.entries(psd)) {
+            const point = currData[i] 
+            point[key] = value[i]
+            currData[i] = point
+          }
         }
       }
 
@@ -56,7 +58,7 @@ function App() {
       lineKeys = Object.keys(data[0]).slice(1)
       // console.log(lineKeys)
       for (let i=0; i<colors.length; i++) {
-        if (toggleLines[i] == true) {
+        if (toggleLines[i] === true) {
           lineList.push( <Line stroke={colors[i]} key={lineKeys[i]} dataKey={lineKeys[i]} /> )
         }
       }

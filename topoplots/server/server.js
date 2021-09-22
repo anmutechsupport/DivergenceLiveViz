@@ -8,7 +8,7 @@ const io = require('socket.io')(server, {
   transports: ['websocket', 'polling']
 });
 
-const deviceId = process.env.DEVICE_ID || "";
+const deviceId = process.env.DEVICE_ID2 || "";
 const email = process.env.EMAIL || "";
 const password = process.env.PASSWORD || "";
 
@@ -95,7 +95,7 @@ const calcInterp = (data, size) => {
     const grid_params = [0,size-1,size];
 
     zi = topogrid.create(pos_x,pos_y,data,grid_params);
-    // console.log(zi)
+    // console.log(data, zi)
 
     const calcColor = (min, max, val) => {
         let ratio = 2 * (val-min) / (max - min)
@@ -113,7 +113,7 @@ const calcInterp = (data, size) => {
 
     for (const point of zi) {
         pointRgb = []
-        for (const val  of point) {
+        for (const val of point) {
             let rgb = calcColor(min, max, val)
             // console.log(rgb)
             pointRgb.push(rgb)

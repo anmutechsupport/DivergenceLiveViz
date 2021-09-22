@@ -44,7 +44,7 @@ export function Montage({gridSize}) {
         if (rgbVal) {
             // console.log(rgbVal)
             const rgb = rgbVal.slice()
-            if (gridSize*gridSize == rgb.length) {
+            if (gridSize*gridSize === rgb.length) {
                 for (let i=0; i<gridSize*gridSize; i++) {
                     interpoints.push( <InterpolatedPoint gridSize={gridSize} number={i} color={rgb[i]} key={i} /> )
                 }

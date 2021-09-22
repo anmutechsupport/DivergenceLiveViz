@@ -9,7 +9,7 @@ export function ToggleList({lineKeys, colors, toggleLines, handleChange}) {
         // console.log(toggleLines.length)
         for (let i=0; i<toggleLines.length; i++) {
             // console.log(lineKeys[i])
-            checkBoxList.push( <Checkbox checked={toggleLines[i]} color={colors[i]} key={lineKeys[i]} lineKey={lineKeys[i]} handleChange={handleChange} id={i} />)
+            checkBoxList.push( <Checkbox checked={toggleLines[i]} color={colors[i]} key={i} lineKey={lineKeys[i]} handleChange={handleChange} id={i} />)
         }
     }
 
