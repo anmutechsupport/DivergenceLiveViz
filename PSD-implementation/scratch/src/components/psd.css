@@ -1,0 +1,22 @@
+#messages {
+    height: 200px;
+    background-color: #eee;
+    font-size: 12px;
+    padding: 20px;
+  }
+  
+  input {
+    width: 100%;
+  }
+  
+  #submit {
+    width: 100%;
+  }
+
+.toggle-list {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 30px;
+
+}
