@@ -1,11 +1,10 @@
 import React, { useEffect, memo, useState, useRef, useContext } from 'react';
 import useStopwatch from './TimerEngine/useStopwatch';
 import { Range, getTrackBackground } from 'react-range';
-import { Theme } from '../../../src/theme';
 import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import Pause from '@material-ui/icons/Pause';
 import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
-import { TimerContext } from 'src/contexts/TimerContext';
+import { TimerContext } from '../../contexts/TimerContext.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -56,12 +55,14 @@ const Timer = memo(({ duration }) => {
     autoStart: false
   });
 
+  // console.log(TimerContext)
+
   const {setCurrentTime, stop: stopContext, start: startContext, setProgressBar } = useContext(TimerContext); //note Timer component sets progressBar 
 
   const [progress, setProgress] = useState(0);
 
   const [timeString, setTimeString] = useState();
-  const [end, setEnd] = useState<boolean>(false);
+  const [end, setEnd] = useState(false);
 
   const classes = useStyles();
 

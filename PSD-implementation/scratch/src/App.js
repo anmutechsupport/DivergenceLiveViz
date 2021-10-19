@@ -5,6 +5,8 @@ import { ToggleList } from './components/toggleList';
 import { io }  from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react';
 import Papa from 'papaparse';
+import Timer from './components/GrahphTimer/Timer';
+import TimerProvider, {TimerContext} from "./contexts/TimerContext.js";
 import {
   Line,
 } from 'recharts';
@@ -126,19 +128,22 @@ function App() {
   
   return (
     <div className="App">
-      <PSDgraph data={data} lineList={lineList}/>
-      <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
-      <form onSubmit={handleSubmit}> 
-        <input
-          type="file"
-          ref={formRef}
-          defaultValue={selectedFile}
-          // onChange={(e) => setSelectedFile(e.target.files[0])}
-        />
-        <br />
-        <button type="submit">Submit</button>
-        
-      </form>
+      <TimerProvider>
+        <PSDgraph data={data} lineList={lineList}/>
+        <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
+        <form onSubmit={handleSubmit}> 
+          <input
+            type="file"
+            ref={formRef}
+            defaultValue={selectedFile}
+            // onChange={(e) => setSelectedFile(e.target.files[0])}
+          />
+          <br />
+          <button type="submit">Submit</button>
+          
+        </form>
+        <Timer duration={300}/>
+      </TimerProvider>
     </div>
   );
 }
