@@ -5,15 +5,15 @@ import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import Pause from '@material-ui/icons/Pause';
 import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
 import { TimerContext } from '../../contexts/TimerContext.js';
-import { Theme } from '../../theme';
+// import { Theme } from '../../theme';
 
-const useStyles = makeStyles((Theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   clockDigits: {
     textAlign: 'center'
   },
   button: {
-    marginLeft: Theme.spacing(5),
+    marginLeft: theme.spacing(5),
     backgroundColor: '#259386',
     '&:hover': {
       backgroundColor: '#29A395'
@@ -23,10 +23,10 @@ const useStyles = makeStyles((Theme) => ({
     marginLeft: 15
   },
   timeLegends: {
-    color: Theme.palette.text.primary
+    color: theme.palette.text.primary
   },
   slider: {
-    margin: Theme.spacing(3)
+    margin: theme.spacing(3)
   }
 }));
 

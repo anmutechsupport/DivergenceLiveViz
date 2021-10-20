@@ -34,7 +34,7 @@ import { TimerContext } from '../contexts/TimerContext';
 //   // startGraph: boolean;
 // }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {},
   path_line: {
     fill: "none",
@@ -75,10 +75,11 @@ const useStyles = makeStyles({
     textAlign: "center",
     padding: "50px"
   },
-//   fontWeightMedium: {
-//     fontWeight: Theme.typography.fontWeightMedium
-//   },
-});
+  fontWeightMedium: {
+    fontWeight: theme.typography.fontWeightMedium
+  },
+}));
+
 
 const margin = {top: 80, right: 80, bottom: 80, left: 80},
       width = 1500 - margin.left - margin.right,
