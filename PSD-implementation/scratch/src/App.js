@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import { PSDgraph } from './components/PSDgraph';
+// import { PSDgraph } from './components/PSDgraph';
+import LineChart from './components/LineChart';
 import { ToggleList } from './components/toggleList';
 import { io }  from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react';
@@ -15,6 +16,7 @@ function App() {
   const [data, setData] = useState();
   const [toggleLines, setToggleLines] = useState(new Array(9).fill(true));
   const colors = ["red", "black", "green", "blue", "purple", "orange", "teal", "magenta", "gold"]
+  const channels = ['CP3', 'F6', 'C4', 'PO4', 'PO3', 'F5', 'C3', 'CP4'];
   const [lineList, setLineList] = useState([]);
   const [lineKeys, setLineKeys] = useState([]);
   const [selectedFile, setSelectedFile] = useState("");
@@ -85,11 +87,11 @@ function App() {
         console.log(EEGdata.matrix)
         // console.log(newTimeStamps)
 
-        // setData({ // format of data Anush
-        //   channels: channels,
-        //   timeStamp: newTimeStamps, //timestamps from csv?
-        //   eegData: EEGdata.matrix //this is data by electrode from csv
-        // });
+        setData({ // format of data Anush
+          channels: channels,
+          timeStamp: newTimeStamps, //timestamps from csv?
+          eegData: EEGdata.matrix //this is data by electrode from csv
+        });
       }
     })()
 
@@ -129,7 +131,12 @@ function App() {
   return (
     <div className="App">
       <TimerProvider>
-        <PSDgraph data={data} lineList={lineList}/>
+        {/* <PSDgraph data={data} lineList={lineList}/> */}
+        <LineChart
+          data={data}
+          // session={session}
+          duration={300} // TODO: need to figure out what selected is
+        /> 
         <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
         <form onSubmit={handleSubmit}> 
           <input

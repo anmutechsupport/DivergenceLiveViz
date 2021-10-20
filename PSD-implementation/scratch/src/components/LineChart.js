@@ -1,15 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import './psd.css';
-import {
-  LineChart,
-  XAxis,
-  YAxis,
-  Label,
-  Legend,
-  CartesianGrid
-} from 'recharts';
 import React, { Component, useState, useRef, useEffect, useContext } from 'react';
-
 import { FC } from 'react';
 // @ts-ignore
 import * as d3 from 'd3';
@@ -34,60 +23,76 @@ import {
 } from '@material-ui/core';
 import { Theme } from '../theme';
 import { TimerContext } from '../contexts/TimerContext';
+// import { Target } from 'react-feather';
 
+// interface LineChartProps {
+//   className?: string;
+//   data;
+//   session;
+//   duration: number;
+//   // update:  any;
+//   // startGraph: boolean;
+// }
 
-export function PSDgraph({data, lineList}) {
+const useStyles = makeStyles({
+  root: {},
+  path_line: {
+    fill: "none",
+    stroke: "#666",
+    strokeWidth: "1.5px"
+  },
+  path_area: {
+    fill: "#e7e7e7"
+  },
+  axis: {
+    shapeRendering: "crispEdges"
+  },
+  x_axis_line: {
+    stroke: "#fff",
+    strokeOpacity: .5,
+    // display: "none"
+  },
+  y_axis_line: {
+    width: "8px",
+    fill: "none",
+    stroke: "#000"
+  },
+  y_axis_path: {
+    fill: "none",
+    stroke: "#000"
+  },
+  guideline: {
+    marginRight: "100px",
+    float: "right"
+  },
+  svgContainer: {
+    display: "block",
+    margins: "atuo",
+    // padding: "50px"
+  },
+  svgDiv: {
+    // width: '100%',
+    textAlign: "center",
+    padding: "50px"
+  },
+  fontWeightMedium: {
+    fontWeight: Theme.typography.fontWeightMedium
+  },
+});
 
-  const useStyles = makeStyles((Theme) => ({
-    root: {},
-    path_line: {
-      fill: "none",
-      stroke: "#666",
-      strokeWidth: "1.5px"
-    },
-    path_area: {
-      fill: "#e7e7e7"
-    },
-    axis: {
-      shapeRendering: "crispEdges"
-    },
-    x_axis_line: {
-      stroke: "#fff",
-      strokeOpacity: .5,
-      // display: "none"
-    },
-    y_axis_line: {
-      width: "8px",
-      fill: "none",
-      stroke: "#000"
-    },
-    y_axis_path: {
-      fill: "none",
-      stroke: "#000"
-    },
-    guideline: {
-      marginRight: "100px",
-      float: "right"
-    },
-    svgContainer: {
-      display: "block",
-      margins: "atuo",
-      // padding: "50px"
-    },
-    svgDiv: {
-      // width: '100%',
-      textAlign: "center",
-      padding: "50px"
-    },
-    fontWeightMedium: {
-      fontWeight: theme.typography.fontWeightMedium
-    },
-  }));
-  
-  const margin = {top: 80, right: 80, bottom: 80, left: 80},
-        width = 1500 - margin.left - margin.right,
-        height = 800 - margin.top - margin.bottom;
+const margin = {top: 80, right: 80, bottom: 80, left: 80},
+      width = 1500 - margin.left - margin.right,
+      height = 800 - margin.top - margin.bottom;
 
+const LineChart = ({
+  className,
+  data,
+//   session,
+  duration,
+  // update,
+  // startGraph,
+  ...rest
+}) => {
   const [filterType, setFilterType] = useState("");
   const filterTypeOptions = ['Highpass Filter', 'Lowpass Filter'];
 
@@ -118,7 +123,7 @@ export function PSDgraph({data, lineList}) {
   const eventGraphsRef = React.createRef();
   const event2GraphsRef = React.createRef();
   const event3GraphsRef = React.createRef();
-  const [graphSettings, setGraphSettings] = useState ();
+  const [graphSettings, setGraphSettings] = useState();
   const channels = [
   "CP3",
   "C3",
@@ -234,7 +239,7 @@ export function PSDgraph({data, lineList}) {
       // updateData();
     });
 
-  t.select('rect.curtain')
+   t.select('rect.curtain')
     .attr('width', 0);
     t.select(".guide")
     .attr('transform', 'translate(' + width + 20 + ', 0)')
@@ -333,7 +338,7 @@ export function PSDgraph({data, lineList}) {
   let yScales = []
   let yA;
 
-  const renderGraph = (svgDOM, data)  => {
+  const renderGraph = (svgDOM, data) => {
     // console.log(uVscale);
 
     const svg = d3.select(svgDOM);
@@ -356,7 +361,7 @@ export function PSDgraph({data, lineList}) {
     //   return ((time%60 == 0 && time/60 < 10 ? '0' : '') + Math.floor(time/60)) + ":"+ (time%60 < 10 ? '0' : '') + time;
     // })
 
-    line = (rawData, i)  => {
+    line = (rawData, i) => {
       // console.log();
 
       let linee = d3.line()
@@ -479,7 +484,7 @@ export function PSDgraph({data, lineList}) {
 
     async function updateData(){
 
-    await updateGraphData(fullData).then((response) => {
+     await updateGraphData(fullData).then((response) => {
         updatedData = response;
         // console.log(response);
         if(updatedData.timeStamp.length != 0){
@@ -595,30 +600,140 @@ setFilterType("");
 setFilterFrequency1("");
 };
 
-  return (
-    <div>
-      <h1>Real Time PSD</h1>
-      <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 5, bottom: 20, left: 5 }}>
-      <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="freqs">
-          <Label 
-              value="Frequency (Hz)" 
-              offset={-15} 
-              position="insideBottom" 
-              />
-        </XAxis>
-        <YAxis type="number" domain={[0, 25]}>
-          <Label
-              value="Power/frequency (uV^20)"
-              position="insideLeft"
-              angle={-90}
-              offset={15} 
-              style={{ textAnchor: 'middle' }}
-              />
-        </YAxis>
-        <Legend verticalAlign={"top"} />
-        {lineList}
-      </LineChart>
+ return  (
+   <div className={classes.svgDiv}>
+      <Box
+        py={2}
+        px={3}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+         <Typography variant="h3" className={classes.fontWeightMedium} color="textPrimary">
+          Raw EEG Graph
+        </Typography>
+        </Box>
+
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+        justifyContent: 'left',
+        alignItems: 'end',
+        justifyItems: 'left',
+        margin: '10px',
+        width: '83%',
+      }}
+    >
+      {/* <div style={{ width: '100%' }}>
+        <Typography style={{ margin: '10px', width: 'auto'}}>
+          <p style={{ fontSize: '12px' }}>Frequency Filters</p>
+        </Typography>
+
+        <TextField
+        label="Filter Type"
+        name="filterType"
+        onChange={({target}) => handleFilterType(target)}
+        select
+        SelectProps={{ native: true }}
+        value={filterType}
+        variant="outlined"
+        autoComplete="off"
+      >
+      <option value=""></option>
+      {filterTypeOptions.map(item => (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      ))}
+    </TextField>
+      </div> */}
+      {/* <div style={{
+        display: "grid",
+        gridTemplateColumns: '1fr 1fr',
+        gridGap: '5px',
+
+      }}> */}
+        {/* <TextField
+          id="filterFrequency"
+          label="Filter Frequency"
+          variant="outlined"
+          type="number"
+          InputProps={{
+            endAdornment: <InputAdornment position="start" style={{marginLeft: '5px'}}>Hz</InputAdornment>,
+          }}
+          onChange={({target}) => handleFilterFrequency(target)}
+          value={filterFrequency1}
+        />
+
+        <Button
+        variant="contained"
+        style={{margin: '0 10px 0 20px', background: 'blue', color: 'white', padding: "15px 40px"}}
+        onClick={applyClick}
+        >Apply</Button>
+
+      <Button
+        variant="contained"
+        style={{margin: '0', background: 'blue', color: 'white', padding: "15px 40px"}}
+        onClick={resetClick}
+        >Reset</Button>
+      {/* </div> */}
+      {/* <div>
+        <Typography style={{ margin: '10px' }}>
+          <p style={{ fontSize: '12px' }}>Downsampling</p>
+        </Typography>
+        <TextField
+        fullWidth
+        label="Sample Hz"
+        name="sampleHz"
+        onChange={({target}) => handleDownsampling(target)}
+        select
+        SelectProps={{ native: true }}
+        value={sampleHz}
+        variant="outlined"
+        autoComplete="off"
+      >
+      <option value=""></option>
+      {sampleHzOptions.map(item => (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      ))}
+    </TextField> */}
+
+      {/* </div> */}
+
+      {/* <div style={{width: '200px'}}>
+        <Typography style={{ margin: '10px' }}>
+          <p style={{ fontSize: '12px' }}>uV Scale</p>
+        </Typography>
+        <TextField
+        fullWidth
+        label="Y-Axis Scale"
+        name="yaxis-scale"
+        onChange={({target}) => handleuVscale(target)}
+        select
+        SelectProps={{ native: true }}
+        value={uVscale}
+        variant="outlined"
+        autoComplete="off"
+      >
+      <option value=""></option>
+      {uVscaleOptions.map(item => (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      ))}
+    </TextField>
+
+      </div> */}
     </div>
-  );
-};
+     { data && <svg className={classes.svgContainer} ref={graphRef} id={"eegGraph"}></svg>}
+     {/* <div>
+     <h1 style={{fontSize: '30px'}}>{currentTime} - {startStatus ? "running" : "paused"} - ProgressBar: {progressBar}</h1>
+     </div> */}
+   </div>
+  )
+}
+
+export default LineChart;
