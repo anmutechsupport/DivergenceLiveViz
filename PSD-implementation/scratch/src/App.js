@@ -100,27 +100,27 @@ function App() {
 
   }, [selectedFile]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    // console.log(toggleLines)
+  //   // console.log(toggleLines)
     
-    let lineList=[]
-    let lineKeys = null
+  //   let lineList=[]
+  //   let lineKeys = null
 
-    if (data) {
-      lineKeys = Object.keys(data[0]).slice(1)
-      // console.log(lineKeys)
-      for (let i=0; i<colors.length; i++) {
-        if (toggleLines[i] === true) {
-          lineList.push( <Line stroke={colors[i]} key={lineKeys[i]} dataKey={lineKeys[i]} /> )
-        }
-      }
-    }
+  //   if (data) {
+  //     lineKeys = Object.keys(data[0]).slice(1)
+  //     // console.log(lineKeys)
+  //     for (let i=0; i<colors.length; i++) {
+  //       if (toggleLines[i] === true) {
+  //         lineList.push( <Line stroke={colors[i]} key={lineKeys[i]} dataKey={lineKeys[i]} /> )
+  //       }
+  //     }
+  //   }
 
-    setLineList(lineList);
-    setLineKeys(lineKeys);
+  //   setLineList(lineList);
+  //   setLineKeys(lineKeys);
 
-  }, [toggleLines, data])
+  // }, [toggleLines, data])
 
   const handleChange = (e, i) => {
     let newLines = toggleLines.slice()
@@ -142,12 +142,17 @@ function App() {
       <ThemeProvider theme={theme}>
         <TimerProvider>
           {/* <PSDgraph data={data} lineList={lineList}/> */}
-          <LineChart
-            data={data}
-            // session={session}
-            duration={300} // TODO: need to figure out what selected is
-          /> 
-          <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
+          {data &&
+            <div>
+              <LineChart
+              data={data}
+              // session={session}
+              duration={300} // TODO: need to figure out what selected is
+              /> 
+              <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
+            </div>
+          }
+          
           <form onSubmit={handleSubmit}> 
             <input
               type="file"
