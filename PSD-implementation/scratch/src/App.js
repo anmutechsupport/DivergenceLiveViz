@@ -8,9 +8,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import Papa from 'papaparse';
 import Timer from './components/GrahphTimer/Timer';
 import TimerProvider, {TimerContext} from "./contexts/TimerContext.js";
+import useSettings from './hooks/useSettings';
+import { createTheme } from './theme';
 import {
   Line,
 } from 'recharts';
+import { ThemeProvider } from '@material-ui/styles';
 
 function App() {
   const [data, setData] = useState();
@@ -126,31 +129,39 @@ function App() {
     setToggleLines(newLines)
   }
 
-  // console.log(filteredLines)
+  const { settings } = useSettings();
+  const theme = createTheme({
+    direction: settings.direction,
+    responsiveFontSizes: settings.responsiveFontSizes,
+    theme: settings.theme
+  });
+
   
   return (
     <div className="App">
-      <TimerProvider>
-        {/* <PSDgraph data={data} lineList={lineList}/> */}
-        <LineChart
-          data={data}
-          // session={session}
-          duration={300} // TODO: need to figure out what selected is
-        /> 
-        <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
-        <form onSubmit={handleSubmit}> 
-          <input
-            type="file"
-            ref={formRef}
-            defaultValue={selectedFile}
-            // onChange={(e) => setSelectedFile(e.target.files[0])}
-          />
-          <br />
-          <button type="submit">Submit</button>
-          
-        </form>
-        <Timer duration={300}/>
-      </TimerProvider>
+      <ThemeProvider theme={theme}>
+        <TimerProvider>
+          {/* <PSDgraph data={data} lineList={lineList}/> */}
+          <LineChart
+            data={data}
+            // session={session}
+            duration={300} // TODO: need to figure out what selected is
+          /> 
+          <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
+          <form onSubmit={handleSubmit}> 
+            <input
+              type="file"
+              ref={formRef}
+              defaultValue={selectedFile}
+              // onChange={(e) => setSelectedFile(e.target.files[0])}
+            />
+            <br />
+            <button type="submit">Submit</button>
+            
+          </form>
+          <Timer duration={300}/>
+        </TimerProvider>
+      </ThemeProvider>
     </div>
   );
 }

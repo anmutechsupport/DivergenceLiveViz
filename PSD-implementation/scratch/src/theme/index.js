@@ -185,7 +185,7 @@ const themesOptions = [
   }
 ];
 
-export const createTheme = (config) => { // dont think config is supposed to be an empty dict
+export const createTheme = (config = {}) => { // dont think config is supposed to be an empty dict
   let themeOptions = themesOptions.find((theme) => theme.name === config.theme);
 
   if (!themeOptions) {

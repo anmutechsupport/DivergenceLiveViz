@@ -21,7 +21,7 @@ import {
   makeStyles,
   InputAdornment
 } from '@material-ui/core';
-import { Theme } from '../theme';
+// import { Theme } from '../theme';
 import { TimerContext } from '../contexts/TimerContext';
 // import { Target } from 'react-feather';
 
@@ -75,9 +75,9 @@ const useStyles = makeStyles({
     textAlign: "center",
     padding: "50px"
   },
-  fontWeightMedium: {
-    fontWeight: Theme.typography.fontWeightMedium
-  },
+//   fontWeightMedium: {
+//     fontWeight: Theme.typography.fontWeightMedium
+//   },
 });
 
 const margin = {top: 80, right: 80, bottom: 80, left: 80},
