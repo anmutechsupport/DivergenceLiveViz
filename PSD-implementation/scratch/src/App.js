@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-// import { PSDgraph } from './components/PSDgraph';
-import LineChart from './components/LineChart';
+import PSDgraph from './components/PSDgraph';
+// import LineChart from './components/LineChart';
 import { ToggleList } from './components/toggleList';
 import { io }  from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react';
@@ -87,7 +87,7 @@ function App() {
         const EEGdata = await getData();
         const newTimeStamps = await createNewTimeStamps(EEGdata);
 
-        console.log(EEGdata.matrix)
+        console.log("++timestamps length++", newTimeStamps.length)
         // console.log(newTimeStamps)
 
         setData({ // format of data Anush
@@ -144,7 +144,7 @@ function App() {
           {/* <PSDgraph data={data} lineList={lineList}/> */}
           {data &&
             <div>
-              <LineChart
+              <PSDgraph
               data={data}
               // session={session}
               duration={300} // TODO: need to figure out what selected is

@@ -149,7 +149,8 @@ const LineChart = ({
   let firFilter = new Fili.FirFilter(firFilterCoeffs);
 
 
-  useEffect(() => {
+  useEffect(() => { //runs once
+    // console.log("rerender")
     async function init() {
       await setData(data).then((res) => { // passed data Anush
         if (graphRef.current != null){
@@ -168,21 +169,22 @@ const LineChart = ({
 
   useEffect(()=> {
     async function changeTime(){
-      await updateGraphTime(fullData, currentTime).then((response) => {
+      await updateGraphTime(fullData, currentTime).then((response) => { //currentTime is being updated by the timer, updates every second
         updatedData = response;
         // console.log(response);
         if(updatedData.timeStamp.length != 0){
-          renderGraph(graphRef.current, response); //rerendering graph given current time updates
+          renderGraph(graphRef.current, response); //rerendering graph every 10 seconds
           startGraph(graphRef.current);
         }
       })
     }
     if(currentTime%10 === 0){
+      console.log("++currentTime++", currentTime) //a new frame of the graph is shown every 10 seconds
       changeTime();
     }
   },[currentTime]);
 
-  useEffect(() => {
+  useEffect(() => { // start/pause
     if(startStatus){
       startGraph(graphRef.current);
     }else{
@@ -196,7 +198,7 @@ const LineChart = ({
     // console.log(startStatus);
     // console.log(progressBar);
     async function changeTime(){
-      await updateGraphTime(fullData, progressBar).then((response) => {
+      await updateGraphTime(fullData, progressBar).then((response) => { //progressBar timestamp is updated whenever user interacts with the bar
         updatedData = response;
         if(updatedData.timeStamp.length != 0){
           renderGraph(graphRef.current, response); //rerendering graph given progress bar updatess
@@ -204,6 +206,7 @@ const LineChart = ({
       })
     }
     changeTime();
+    console.log("++progressBar+", progressBar)
   },[progressBar])
 
   let secondScale = 256;
@@ -214,10 +217,11 @@ const LineChart = ({
   const setData = async (res) => {
     return new Promise((resolve, reject) => {
       // console.log(firFilter.simulate(res.eegData[0].slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale)))
+      console.log((timer+1)*timeScale*secondScale)
 
       let newData = {
         channels: data.channels,
-        timeStamp: res.timeStamp.slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale),
+        timeStamp: res.timeStamp.slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale), //slicing by 2560, but timer isn't iterated, why?
         eegData: res.eegData.map(data => data.slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale)),
       }
       resolve(newData)
