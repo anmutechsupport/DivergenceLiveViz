@@ -32,7 +32,9 @@ import {
   Legend,
   CartesianGrid
 } from 'recharts';
+
 import { Observable } from 'rxjs';
+import * as pipes from '@neurosity/pipes'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -205,12 +207,23 @@ const PSDgraph = ({
   }
 
   const renderGraph = (data) => { //PSD processing here
-    const obserableData = new Observable(subscriber => {
-      subscriber.next(data)
+    const obserableData = new Observable(subscriber => { 
+      // format data to look like epoch
+      const epoch = {
+        data: data.eegData,
+        info: {
+          samplingRate: 256, 
+          // startTime: data.timeStamp[0]
+          startTime: Date.now()
+        }
+      }
+      subscriber.next(epoch)
     })
 
-    obserableData.subscribe(data => {
-      console.log(data);
+    obserableData.pipe(
+      pipes.fft({ bins: 128 })
+    ).subscribe(fft => {
+      console.log(fft);
     });
   }
 
@@ -224,11 +237,35 @@ const PSDgraph = ({
         justifyContent="space-between"
       >
          <Typography variant="h3" className={classes.fontWeightMedium} color="textPrimary">
-          Raw EEG Graph
+          PSD Graph
         </Typography>
         </Box>
 
      {/* { data && <svg className={classes.svgContainer} ref={graphRef} id={"eegGraph"}></svg>} */}
+     {/* <div>
+      <h1>Real Time PSD</h1>
+      <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 5, bottom: 20, left: 5 }}>
+      <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="freqs">
+          <Label 
+              value="Frequency (Hz)" 
+              offset={-15} 
+              position="insideBottom" 
+              />
+        </XAxis>
+        <YAxis type="number" domain={[0, 25]}>
+          <Label
+              value="Power/frequency (uV^20)"
+              position="insideLeft"
+              angle={-90}
+              offset={15} 
+              style={{ textAnchor: 'middle' }}
+              />
+        </YAxis>
+        <Legend verticalAlign={"top"} />
+        {lineList}
+      </LineChart>
+    </div> */}
    </div>
   )
 }

@@ -115,30 +115,7 @@ verifyEnvs(email, password, deviceId)
 console.log(`${email} attempting to authenticate to ${deviceId}`);
 login();
 
-// 1. listen for socket connections
-io.on('connection', client => {
-
-    console.log("socket connected")
-
-    notion.brainwaves("psd").subscribe(brainwaves => {
-        // str = JSON.stringify(brainwaves.psd, null, 4); 
-        // console.log(brainwaves.psd.length);
-        let psd = brainwaves.psd
-        let meanPsd = vectorAverage(psd)
-        let emitObj = {
-            freqs: brainwaves.freqs,
-            meanPsd: meanPsd,
-        }
-
-        for (i=0; i<psd.length; i++) {
-            emitObj[`e${i+1}`] = psd[i]
-        }
-
-        let newEmitObj = rollingMean(emitObj)
-
-        client.emit('psd', newEmitObj);
-    })
-    
-});
-
-server.listen(4000);
+notion.brainwaves("raw").subscribe(brainwaves => {
+    str = JSON.stringify(brainwaves, null, 4); 
+    console.log(str);
+})

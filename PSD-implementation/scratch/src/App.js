@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import PSDgraph from './components/PSDgraph';
-// import LineChart from './components/LineChart';
+import LineChart from './components/LineChart';
 import { ToggleList } from './components/toggleList';
 import { io }  from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react';
@@ -149,7 +149,13 @@ function App() {
               // session={session}
               duration={300} // TODO: need to figure out what selected is
               /> 
+              {/* <LineChart
+              data={data}
+              // session={session}
+              duration={300} // TODO: need to figure out what selected is
+              />  */}
               <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
+              <Timer duration={300}/>
             </div>
           }
           
@@ -164,7 +170,6 @@ function App() {
             <button type="submit">Submit</button>
             
           </form>
-          <Timer duration={300}/>
         </TimerProvider>
       </ThemeProvider>
     </div>
