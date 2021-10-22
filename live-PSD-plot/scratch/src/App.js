@@ -23,14 +23,15 @@ function App() {
     socket.on('psd', psd => {
 
       let currData = []
+      // console.log(psd)
 
-      for (let i = 0; i < psd.freqs.length; i++) {
+      for (let i = 0; i < psd.freqs.length; i++) { // this loop takes psd and creates an array where each row has a value from an electrode corresponding to a freq bin
         if (psd.freqs[i] < 60) { // filtering
           currData[i] = {}
           for (const [key, value] of Object.entries(psd)) {
             const point = currData[i] 
             point[key] = value[i]
-            currData[i] = point
+            // currData[i] = point
           }
         }
       }
@@ -56,16 +57,16 @@ function App() {
 
     if (data) {
       lineKeys = Object.keys(data[0]).slice(1)
-      // console.log(lineKeys)
+      // console.log(data)
       for (let i=0; i<colors.length; i++) {
         if (toggleLines[i] === true) {
-          lineList.push( <Line stroke={colors[i]} key={lineKeys[i]} dataKey={lineKeys[i]} /> )
+          lineList.push( <Line stroke={colors[i]} key={lineKeys[i]} dataKey={lineKeys[i]} /> ) // creating lines for each electrode
         }
       }
     }
 
     setLineList(lineList);
-    setLineKeys(lineKeys);
+    setLineKeys(lineKeys); // also use linekeys for toggle list
 
   }, [toggleLines, data])
 

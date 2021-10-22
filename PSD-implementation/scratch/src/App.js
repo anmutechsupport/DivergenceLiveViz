@@ -1,8 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import PSDgraph from './components/PSDgraph';
+import PSDframe from './components/PSDframe';
 import LineChart from './components/LineChart';
-import { ToggleList } from './components/toggleList';
 import { io }  from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react';
 import Papa from 'papaparse';
@@ -10,18 +9,11 @@ import Timer from './components/GrahphTimer/Timer';
 import TimerProvider, {TimerContext} from "./contexts/TimerContext.js";
 import useSettings from './hooks/useSettings';
 import { createTheme } from './theme';
-import {
-  Line,
-} from 'recharts';
 import { ThemeProvider } from '@material-ui/styles';
 
 function App() {
   const [data, setData] = useState();
-  const [toggleLines, setToggleLines] = useState(new Array(9).fill(true));
-  const colors = ["red", "black", "green", "blue", "purple", "orange", "teal", "magenta", "gold"]
   const channels = ['CP3', 'F6', 'C4', 'PO4', 'PO3', 'F5', 'C3', 'CP4'];
-  const [lineList, setLineList] = useState([]);
-  const [lineKeys, setLineKeys] = useState([]);
   const [selectedFile, setSelectedFile] = useState("");
   const formRef = useRef(null);
 
@@ -122,12 +114,12 @@ function App() {
 
   // }, [toggleLines, data])
 
-  const handleChange = (e, i) => {
-    let newLines = toggleLines.slice()
-    newLines[i] = e.target.checked
-    // console.log(newLines)
-    setToggleLines(newLines)
-  }
+  // const handleChange = (e, i) => {
+  //   let newLines = toggleLines.slice()
+  //   newLines[i] = e.target.checked
+  //   // console.log(newLines)
+  //   setToggleLines(newLines)
+  // }
 
   const { settings } = useSettings();
   const theme = createTheme({
@@ -144,7 +136,7 @@ function App() {
           {/* <PSDgraph data={data} lineList={lineList}/> */}
           {data &&
             <div>
-              <PSDgraph
+              <PSDframe
               data={data}
               // session={session}
               duration={300} // TODO: need to figure out what selected is
@@ -154,7 +146,6 @@ function App() {
               // session={session}
               duration={300} // TODO: need to figure out what selected is
               />  */}
-              <ToggleList lineKeys={lineKeys} colors={colors} toggleLines={toggleLines} handleChange={handleChange}/>
               <Timer duration={300}/>
             </div>
           }
