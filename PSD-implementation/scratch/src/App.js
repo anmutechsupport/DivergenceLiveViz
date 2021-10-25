@@ -141,11 +141,11 @@ function App() {
               // session={session}
               duration={300} // TODO: need to figure out what selected is
               /> 
-              {/* <LineChart
+              <LineChart
               data={data}
               // session={session}
               duration={300} // TODO: need to figure out what selected is
-              />  */}
+              /> 
               <Timer duration={300}/>
             </div>
           }

@@ -132,7 +132,7 @@ const PSDframe = ({
       })
     }
     if(currentTime%timeScale === 0){
-      console.log("++currentTime++", currentTime) //a new frame of the graph is shown every 5 seconds
+      // console.log("++currentTime++", currentTime) //a new frame of the graph is shown every 5 seconds
       changeTime();
     }
   },[currentTime]);
@@ -332,7 +332,7 @@ const PSDframe = ({
 
   useEffect(() => {
 
-    console.log("updating graph", formattedData)
+    // console.log("updating graph", formattedData)
     
     let lineList=[]
     let lineKeys = null

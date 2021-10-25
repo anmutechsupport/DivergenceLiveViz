@@ -179,7 +179,7 @@ const LineChart = ({
       })
     }
     if(currentTime%10 === 0){
-      console.log("++currentTime++", currentTime) //a new frame of the graph is shown every 10 seconds
+      // console.log("++currentTime++", currentTime) //a new frame of the graph is shown every 10 seconds
       changeTime();
     }
   },[currentTime]);
@@ -217,7 +217,7 @@ const LineChart = ({
   const setData = async (res) => {
     return new Promise((resolve, reject) => {
       // console.log(firFilter.simulate(res.eegData[0].slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale)))
-      console.log((timer+1)*timeScale*secondScale)
+      // console.log((timer+1)*timeScale*secondScale)
 
       let newData = {
         channels: data.channels,
