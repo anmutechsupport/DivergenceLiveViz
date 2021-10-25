@@ -1,9 +1,28 @@
 import { Checkbox } from './checkbox';
 import React, { useEffect, useState } from 'react';
 import './psd.css';
+// import { ToggleButtonGroup } from '@mui/material';
+
+// export function ToggleList({lineKeys, colors, toggleLines, handleChange}) {
+//     // console.log(toggleLines)
+//     let checkBoxList = []
+//     if (lineKeys) {
+//         // console.log(toggleLines.length)
+//         for (let i=0; i<toggleLines.length; i++) {
+//             // console.log(lineKeys[i])
+//             checkBoxList.push( <Checkbox checked={toggleLines[i]} color={colors[i]} key={i} lineKey={lineKeys[i]} handleChange={handleChange} id={i} />)
+//         }
+//     }
+
+//     return (
+//         <div style={{backgroundColor: "#ABBAEA"}}className="toggle-list">
+//             {checkBoxList}
+//         </div>
+//     )
+// }
 
 export function ToggleList({lineKeys, colors, toggleLines, handleChange}) {
-    // console.log(toggleLines)
+    console.log(toggleLines)
     let checkBoxList = []
     if (lineKeys) {
         // console.log(toggleLines.length)
@@ -14,7 +33,7 @@ export function ToggleList({lineKeys, colors, toggleLines, handleChange}) {
     }
 
     return (
-        <div style={{backgroundColor: "#ABBAEA"}}className="toggle-list">
+        <div className="toggle-list">
             {checkBoxList}
         </div>
     )

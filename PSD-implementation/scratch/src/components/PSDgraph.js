@@ -12,6 +12,7 @@ import {
 
 export function PSDgraph({data, lineList}) {
     // console.log(data, lineList)
+    // YAxis type="number" domain={[0, 25]}
 
   return (
     <div>
@@ -25,7 +26,7 @@ export function PSDgraph({data, lineList}) {
               position="insideBottom" 
               />
         </XAxis>
-        <YAxis type="number" domain={[0, 25]}>
+        <YAxis type="number">
           <Label
               value="Power/frequency (uV^20)"
               position="insideLeft"

@@ -353,8 +353,9 @@ const PSDframe = ({
   }, [toggleLines, formattedData])
 
   const handleChange = (e, i) => {
+    console.log(e, i)
     let newLines = toggleLines.slice()
-    newLines[i] = e.target.checked
+    newLines[i] = !toggleLines[i]
     // console.log(newLines)
     setToggleLines(newLines)
   }
