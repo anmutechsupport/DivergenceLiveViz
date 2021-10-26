@@ -32,7 +32,7 @@ import {
 import { Observable } from 'rxjs';
 import * as pipes from '@neurosity/pipes'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({ // don't have to import theme in js since it's now global from the provider
   root: {},
   path_line: {
     fill: "none",
@@ -78,11 +78,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const margin = {top: 80, right: 80, bottom: 80, left: 80},
-      width = 1500 - margin.left - margin.right,
-      height = 800 - margin.top - margin.bottom;
-
 const PSDframe = ({
   className,
   data,
@@ -102,24 +97,6 @@ const PSDframe = ({
   const fullData = data;
   let updatedData;
 
-  // useEffect(() => { //runs once
-  //   // console.log("rerender")
-  //   async function init() {
-  //     await setData(data).then((res) => { // passed data Anush
-  //       if (graphRef.current != null){
-  //         // console.log("Updated");
-  //         // console.log(res);
-  //         // console.log("eventsData");
-  //         // console.log(eventsData)
-  //         updatedData =res;
-  //         renderGraph(updatedData);
-  //       }
-  //     })
-  //   }
-
-  //   init();
-  // }, [])
-
   useEffect(()=> {
     async function changeTime(){
       await updateGraphTime(fullData, currentTime).then((response) => { //currentTime is being updated by the timer, updates every second
@@ -136,16 +113,6 @@ const PSDframe = ({
       changeTime();
     }
   },[currentTime]);
-
-  // useEffect(() => { // start/pause
-  //   if(startStatus){
-  //     startGraph(graphRef.current);
-  //   }else{
-  //     pauseGraph(graphRef.current);
-  //   }
-  //   // console.log("Start / Pause");
-
-  // },[startStatus])
 
   useEffect(() => {
     // console.log(startStatus);
@@ -166,20 +133,6 @@ const PSDframe = ({
   let timeScale = 5;
   let timer = 0;
   let currentGraphTime = 0;
-
-  // const setData = async (res) => {
-  //   return new Promise((resolve, reject) => {
-  //     // console.log(firFilter.simulate(res.eegData[0].slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale)))
-  //     console.log((timer+1)*timeScale*secondScale)
-
-  //     let newData = {
-  //       channels: data.channels,
-  //       timeStamp: res.timeStamp.slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale), //slicing by 2560, but timer isn't iterated, why?
-  //       eegData: res.eegData.map(data => data.slice(timer*timeScale*secondScale, (timer+1)*timeScale*secondScale)),
-  //     }
-  //     resolve(newData)
-  //   })
-  // }
 
   const updateGraphTime = async (res, time) => {
     // console.log("hellloo update time")
@@ -353,7 +306,7 @@ const PSDframe = ({
   }, [toggleLines, formattedData])
 
   const handleChange = (e, i) => {
-    console.log(e, i)
+    // console.log(e, i)
     let newLines = toggleLines.slice()
     newLines[i] = !toggleLines[i]
     // console.log(newLines)

@@ -22,7 +22,7 @@ import './psd.css';
 // }
 
 export function ToggleList({lineKeys, colors, toggleLines, handleChange}) {
-    console.log(toggleLines)
+    // console.log(toggleLines)
     let checkBoxList = []
     if (lineKeys) {
         // console.log(toggleLines.length)
