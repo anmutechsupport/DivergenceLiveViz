@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import PSDframe from './components/PSDframe';
 import LineChart from './components/LineChart';
+import TopoFrame from './components/TopoFrame';
 import { io }  from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react';
 import Papa from 'papaparse';
@@ -137,6 +138,11 @@ function App() {
           {data &&
             <div>
               <PSDframe
+              data={data}
+              // session={session}
+              duration={300} // TODO: need to figure out what selected is
+              /> 
+              <TopoFrame
               data={data}
               // session={session}
               duration={300} // TODO: need to figure out what selected is
